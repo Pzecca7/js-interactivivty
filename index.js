@@ -1,6 +1,7 @@
 console.log('Hello World')
 
 let message = document.querySelector('#message')
+let list = document.querySelector('ul')
 
 
 const addMovie = (event) => {
@@ -14,7 +15,7 @@ const addMovie = (event) => {
     let deleteBtn = document.createElement('button')
     deleteBtn.textContent = 'X'
     movie.appendChild(deleteBtn)
-    document.querySelector('ul').appendChild(movie)
+    list.appendChild(movie)
     inputField.value = ''
     deleteBtn.addEventListener('click', deleteMovie)
 
@@ -24,16 +25,27 @@ const addMovie = (event) => {
 
 const deleteMovie = (event) => {
     event.target.parentNode.remove()
-    message.textContent = 'Movie Deleted!'
+    message.textContent = `${event.target.parentNode.firstChild.textContent} deleted!`
+
+    revealMessage()
 }
 
 const crossOffMovie = (event) => {
     event.target.classList.toggle('checked')
     if(event.target.classList.contains('checked')){
-        message.textContent = 'Movie Watched!'
+        message.textContent = event.target.textContent + " watched!"
     } else {
-        message.textContent = 'Movie Added back!'
+        message.textContent = event.target.textContent + " added back!"
     }
+    revealMessage()
+}
+
+function revealMessage () {
+    message.classList.remove('hide')
+
+    setTimeout(() => {
+        message.classList.add('hide')
+    }, 1000)
 }
 
 let addBtn = document.querySelector('form')
